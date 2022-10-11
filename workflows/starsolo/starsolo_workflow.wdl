@@ -12,6 +12,9 @@ workflow starsolo_workflow {
         String read2_fastq_pattern = "_S*_L*_R2_001.fastq.gz"
         # Which read contains cell barcodes and UMIs. Either "read1" or "read2"
         String barcode_read = "read1"
+        Int outFilterMultimapNmax = 100
+        Int  outSAMmultNmax = 1
+        Int winAnchorMultimapNmax = 100
         # Type of SAM/BAM output
         String? outSAMtype
         # Type of single-cell RNA-seq
@@ -145,7 +148,10 @@ workflow starsolo_workflow {
                     disk_space = disk_space,
                     preemptible = preemptible,
                     awsQueueArn = awsQueueArn,
-                    backend = backend
+                    backend = backend,
+                    outFilterMultimapNmax = outFilterMultimapNmax,
+                    outSAMmultNmax = outSAMmultNmax,
+                    winAnchorMultimapNmax = winAnchorMultimapNmax
             }
         }
     }
