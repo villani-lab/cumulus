@@ -45,6 +45,9 @@ workflow starsolo_count {
         Int preemptible
         String awsQueueArn
         String backend
+        Int outFilterMultimapNmax
+        Int  outSAMmultNmax
+        Int winAnchorMultimapNmax
     }
 
     Map[String, String] acronym2uri = read_map(acronym_file)
@@ -94,7 +97,10 @@ workflow starsolo_count {
             disk_space = disk_space,
             preemptible = preemptible,
             awsQueueArn = awsQueueArn,
-            backend = backend
+            backend = backend,
+            outFilterMultimapNmax = outFilterMultimapNmax,
+            outSAMmultNmax = outSAMmultNmax,
+            winAnchorMultimapNmax = winAnchorMultimapNmax
     }
 
     output {
@@ -147,6 +153,9 @@ task run_starsolo {
         Int preemptible
         String awsQueueArn
         String backend
+        Int outFilterMultimapNmax
+        Int  outSAMmultNmax
+        Int winAnchorMultimapNmax
     }
 
     command {
@@ -221,6 +230,9 @@ task run_starsolo {
 
         barcode_read = '~{barcode_read}'
         args_dict = dict()
+        args_dict['--outFilterMultimapNmax'] = '~{outFilterMultimapNmax}'
+        args_dict['--outSAMmultNmax'] = '~{outSAMmultNmax}''
+        args_dict['--winAnchorMultimapNmax'] = '~{winAnchorMultimapNmax}'
 
         if '~{assay}' in ['tenX_v2', 'tenX_v3', 'ShareSeq', 'tenX_5p', 'tenX_5p_pe', 'tenX_multiome']:
             args_dict['--soloType'] = 'CB_UMI_Simple'
